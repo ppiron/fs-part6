@@ -1,17 +1,18 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import {voteAction} from '../reducers/anecdoteReducer'
 import {voteActionNotification, createResetNotification} from '../reducers/notificationReducer'
 
 const AnecdoteList = props => {
-  const {store} = props
-  const filter =  store.getState().filter
-  const anecdotes = store.getState().anecdotes.filter(anecdote => anecdote.content.includes(filter))
+  // const {store} = props
+  // const filter =  store.getState().filter
+  const anecdotes = props.anecdotes.filter(anecdote => anecdote.content.includes(props.filter))
 
   const vote = id => {
-    store.dispatch(voteAction(id))
+    props.voteAction(id)
     const content = anecdotes.find(anecdote => anecdote.id === id).content
-    store.dispatch(voteActionNotification(content))
-    window.setTimeout(() => store.dispatch(createResetNotification()), 3000)
+    props.voteActionNotification(content)
+    window.setTimeout(() => props.createResetNotification(), 3000)
   };
 
   return (
@@ -29,4 +30,20 @@ const AnecdoteList = props => {
   )
 }
 
-export default AnecdoteList
+const mapStateToProps = state => {
+  return {
+    anecdotes: state.anecdotes,
+    filter: state.filter
+  }
+}
+
+const mapDispatchToProps = {
+  voteAction,
+  voteActionNotification,
+  createResetNotification
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AnecdoteList)
