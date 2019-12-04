@@ -4,20 +4,16 @@ import {voteAction} from '../reducers/anecdoteReducer'
 import {voteActionNotification, createResetNotification} from '../reducers/notificationReducer'
 
 const AnecdoteList = props => {
-  // const {store} = props
-  // const filter =  store.getState().filter
-  const anecdotes = props.anecdotes.filter(anecdote => anecdote.content.includes(props.filter))
-
   const vote = id => {
     props.voteAction(id)
-    const content = anecdotes.find(anecdote => anecdote.id === id).content
+    const content = props.anecdotes.find(anecdote => anecdote.id === id).content
     props.voteActionNotification(content)
     window.setTimeout(() => props.createResetNotification(), 3000)
   };
 
   return (
     <>
-      {anecdotes.sort((a1, a2) => a2.votes - a1.votes).map(anecdote => (
+      {props.anecdotes.sort((a1, a2) => a2.votes - a1.votes).map(anecdote => (
         <div key={anecdote.id}>
           <div>{anecdote.content}</div>
           <div>
@@ -30,10 +26,13 @@ const AnecdoteList = props => {
   )
 }
 
+const anecdotesToShow = ({anecdotes, filter}) => {
+  return anecdotes.filter(anecdote => anecdote.content.includes(filter)) 
+}
+
 const mapStateToProps = state => {
   return {
-    anecdotes: state.anecdotes,
-    filter: state.filter
+    anecdotes: anecdotesToShow(state)
   }
 }
 
