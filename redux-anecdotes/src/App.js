@@ -1,6 +1,6 @@
 import React , { useEffect } from 'react';
 import {connect} from 'react-redux'
-import anecdoteService from './services/anecdotes'
+// import anecdoteService from './services/anecdotes'
 import {initializeAnecdotes} from './reducers/anecdoteReducer'
 import AnecdoteList from './components/AnecdoteList'
 import AnecdoteForm from './components/AnecdoteForm'
@@ -9,8 +9,9 @@ import Filter from './components/Filter'
 
 const App = props => {
   useEffect(() => {
-    anecdoteService.getAll().then(anecdotes => props.initializeAnecdotes(anecdotes))
+    props.initializeAnecdotes()
   }, [props])
+
   return (
     <div>
       <h2>Anecdotes</h2>

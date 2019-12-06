@@ -4,7 +4,6 @@ import {changeFilterAction} from '../reducers/filterReducer'
 
 const Filter = (props) => {
   const handleChange = (event) => {
-    // input-field value is in variable event.target.value
     props.changeFilterAction(event.target.value)
   }
   const style = {

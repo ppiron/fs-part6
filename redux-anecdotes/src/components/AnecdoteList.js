@@ -7,8 +7,7 @@ const AnecdoteList = props => {
   const vote = id => {
     props.voteAction(id)
     const content = props.anecdotes.find(anecdote => anecdote.id === id).content
-    props.voteActionNotification(content)
-    window.setTimeout(() => props.createResetNotification(), 3000)
+    props.voteActionNotification(content, 3000)
   };
 
   return (
@@ -27,7 +26,7 @@ const AnecdoteList = props => {
 }
 
 const anecdotesToShow = ({anecdotes, filter}) => {
-  return anecdotes.filter(anecdote => anecdote.content.includes(filter)) 
+  return anecdotes.filter(anecdote => anecdote.content.toLowerCase().includes(filter.toLowerCase())) 
 }
 
 const mapStateToProps = state => {

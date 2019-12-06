@@ -13,19 +13,33 @@ const notificationReducer = (state=initialState, action) => {
   return state
 }
 
-export const voteActionNotification = content => {
-  return {
-    type: 'VOTENOTIFICATION',
-    data: { content }
+export const voteActionNotification = (content, delay) => {
+  return dispatch => {
+    dispatch(
+      {
+        type: 'VOTENOTIFICATION',
+        data: {content}
+      }
+    )
+    setTimeout(() => dispatch({
+      type: 'RESETNOTIFICATION'
+    }), delay)
   }
 }
 
-export const createAnecdoteActionNotification = content => {
-  return {
-    type: 'NEWNOTIFICATION',
-    data: {
-      content,
-    }
+export const createAnecdoteActionNotification = (content, delay) => {
+  return dispatch => {
+    dispatch(
+      {
+       type: 'NEWNOTIFICATION',
+       data: {
+         content,
+       }
+      }  
+    )
+    setTimeout(() => dispatch({
+      type: 'RESETNOTIFICATION'
+    }), delay)
   }
 }
 
